@@ -9,7 +9,7 @@ import Store from './redux/Store/Store';
 function App() {
   return (
     <Provider store={Store}>
-
+      {/* hi sara */}
       <Home />
     </Provider>
   );
