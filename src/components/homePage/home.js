@@ -14,6 +14,8 @@ import {
 import UploadImage from '../uploadImage/uploadImage';
 import history from "../history"
 import Company from '../company/company'
+import MyCompany from "../myCompany/myCompany";
+import ImageColor from '../imageColor/imageColor';
 export default function Home(props) {
 
     return (
@@ -27,15 +29,20 @@ export default function Home(props) {
             </div>
 
             <Switch>
-               
 
+                <Route path={"/company/:name"} >
+                    <MyCompany />
+                </Route>
                 <Route path={"/company"} >
                     <Company />
                 </Route>
+
                 <Route path={"/uploadImage"} >
                     <UploadImage />
                 </Route>
-
+                <Route path={"/imageColor"} >
+                    <ImageColor />
+                </Route>
                 <Route path={"/"}  >
                     <Next isGood={false} />
                     <SelectColor />

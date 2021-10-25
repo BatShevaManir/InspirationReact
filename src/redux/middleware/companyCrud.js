@@ -21,6 +21,7 @@ export const getCompany = ({ dispatch, getState }) => next => action => {
             console.log(result);
             
             dispatch(actions.setCompany(result.company))
+            dispatch(actions.setProducts(result.products))
 
         })
             .catch((err) => {
