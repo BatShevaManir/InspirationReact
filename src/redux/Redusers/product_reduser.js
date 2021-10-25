@@ -3,13 +3,14 @@ import { actions } from '../actions/action';
 import createReducer from './reducerUtils';
 const initialState = {
 
-    company: {},
+    products: []
+
 
 }
 const card = {
-    setCompany(state, action) {
-        console.log(action.payload);
-        state.company = action.payload;
+
+    setProducts(state, action) {
+        state.products = action.payload;
     }
 }
 

@@ -4,35 +4,53 @@ import { connect } from 'react-redux';
 import { actions } from '../../redux/actions/action';
 import { Button } from 'react-bootstrap';
 import ImageUploading from "react-images-uploading";
+import { ColorExtractor } from "react-color-extractor";
+
+
 function UploadImage(props) {
     const [images, setImages] = useState([])
-    // const [images, setImages] = useState([])
     const maxNumber = 69;
-
+    const [colorsImage, setColorsImage] = useState([])
+    const renderSwatches = (index) => {
+        if (images[index].colors) {
+            return images[index].colors.map((color, id) => {
+                return (
+                    <div
+                        key={id}
+                        style={{
+                            backgroundColor: color,
+                            width: 20,
+                            height: 20
+                        }}
+                    />
+                );
+            });
+        }
+        else
+            return colorsImage.map((color, id) => {
+                return (
+                    <div
+                        key={id}
+                        style={{
+                            backgroundColor: color,
+                            width: 20,
+                            height: 20
+                        }}
+                    />
+                );
+            });
+    };
     const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-
-        // console.log("imageList", imageList);
-        // console.log("addUpdateIndex", addUpdateIndex);
         setImages(imageList);
     };
 
     function uploadImage() {
-        console.log("images", images);
-        const path = require('path')
-const getColors = require('get-image-colors')
-
-
-        images.map(image => {
-            // פונקציה שמביאה איזה צבעים יש בתמונה
-            getColors(path.join(__dirname, image.file.name)).then(colors => {
-                // `colors` is an array of color objects
-              })
-            image.colors = ["#B69974", "red"]
-        })
         props.uploadImage({ 'images': images, 'companyId': props.company._id })
     }
-
+    function setMyColors(colors, index) {
+        setColorsImage(colors)
+        images[index].colors = colors
+    }
     return (
         <>
             <div class=''>
@@ -42,7 +60,6 @@ const getColors = require('get-image-colors')
             <Button variant="outline-warning"
                 onClick={() => uploadImage()}>
                 upload image</Button >
-
 
             <div className="App">
                 <ImageUploading
@@ -74,7 +91,20 @@ const getColors = require('get-image-colors')
                             <button onClick={onImageRemoveAll}>Remove all images</button>
                             {imageList.map((image, index) => (
                                 <div key={index} className="image-item">
-                                    <img src={image["data_url"]} alt="" width="100" />
+
+                                    <ColorExtractor getColors={colors => setMyColors(colors, index)} >
+                                        <img src={image["data_url"]} alt="" width="100" />
+                                    </ColorExtractor>
+                                    <div
+                                        style={{
+                                            marginTop: 20,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+
+                                        }}
+                                    >
+                                        {renderSwatches(index)}
+                                    </div>
                                     <div className="image-item__btn-wrapper">
                                         <button onClick={() => onImageUpdate(index)}>Update</button>
                                         <button onClick={() => onImageRemove(index)}>Remove</button>

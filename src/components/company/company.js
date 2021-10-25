@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Card } from 'react-bootstrap';
@@ -6,6 +6,20 @@ import { actions } from '../../redux/actions/action';
 
 
 function Company(props) {
+
+    useEffect(() => {
+
+        if (props.company && props.company.name && companyOk) {
+            console.log('component company');
+            console.log(props.company)
+            console.log(props.products)
+                ;
+            props.history.push('company/' + props.company.name)
+
+        }
+
+    }, [props.company])
+
 
     const passwordRequired = useRef()
     const [companyOk, setCompanyOk] = useState(false)
@@ -49,6 +63,9 @@ function Company(props) {
 }
 const mapStateToProps = (state) => {
     return {
+        company: state.company_reduser.company,
+        products: state.product_reduser.products,
+
 
     }
 }
