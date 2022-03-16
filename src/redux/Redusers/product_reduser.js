@@ -3,7 +3,8 @@ import { actions } from '../actions/action';
 import createReducer from './reducerUtils';
 const initialState = {
 
-    products: []
+    products: [],
+    categories: []
 
 
 }
@@ -11,6 +12,9 @@ const card = {
 
     setProducts(state, action) {
         state.products = action.payload;
+    },
+    setCategories(state, action) {
+        state.categories = action.payload;
     }
 }
 

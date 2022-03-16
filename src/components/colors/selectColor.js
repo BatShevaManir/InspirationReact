@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CirclePicker, SwatchesPicker } from 'react-color'
+import './selectColor.css'
 
 export default function SelectColor(props) {
 
@@ -14,25 +15,30 @@ export default function SelectColor(props) {
     const [viewMyChooses, setViewMyChooses] = useState()
 
     function chopseColor(e) {
-        myChooses[myChooses.length] = { hex: e.hex, rgb: e.rgb }
-        let viewMyChooses = myChooses.map((myChoose) => {
-            return (
-                <div style={{
-                    height: '100px',
-                    width: '100px',
-                    display: "inline-block",
-                    backgroundColor: myChoose.hex
-                }}>
-                </div>)
-        })
-        setViewMyChooses(viewMyChooses)
+        if (!myChooses.find(x => x.hex == e.hex)) {
+            myChooses[myChooses.length] = { hex: e.hex, rgb: e.rgb }
+            let viewMyChooses = myChooses.map((myChoose) => {
+                return (
+                    <div style={{
+                        height: '100px',
+                        width: '100px',
+                        display: "inline-block",
+                        backgroundColor: myChoose.hex
+                    }}>
+                    </div>)
+            })
+            setViewMyChooses(viewMyChooses)
+        }
+
+
 
     }
 
     return (
         <>
-            color
+            <h1>  Choose color</h1>
             <SwatchesPicker
+                className='swatchesPicker'
                 // style={{ background: "red" }}
                 onChangeComplete={(e) => chopseColor(e)}
             // onChange={(e) => console.log(e)}

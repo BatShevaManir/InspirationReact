@@ -10,12 +10,11 @@ export const uploadImage = ({ }) => next => action => {
         for (let index = 0; index < action.payload.images.length; index++) {
 
 
-            console.log(product);
             var formData = new FormData()
 
-            formData.append("name", `product`)
             formData.append("description", `description ${index}`)
             formData.append("companyId", action.payload.companyId)
+            formData.append("categoryId",  action.payload.categoryId)
             formData.append("image", action.payload.images[index].file)
             formData.append("colors", action.payload.images[index].colors)
             fetch(
@@ -36,7 +35,7 @@ export const uploadImage = ({ }) => next => action => {
                 // console.log(result.json());
                 return result.json()
             }).then((result) => {
-                console.log(result);
+                // console.log(result);
 
             })
                 .catch((err) => {

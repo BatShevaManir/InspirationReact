@@ -9,11 +9,7 @@ function Company(props) {
 
     useEffect(() => {
 
-        if (props.company && props.company.name && companyOk) {
-            console.log('component company');
-            console.log(props.company)
-            console.log(props.products)
-                ;
+        if (props.company && props.company.name) {
             props.history.push('company/' + props.company.name)
 
         }
@@ -22,11 +18,9 @@ function Company(props) {
 
 
     const passwordRequired = useRef()
-    const [companyOk, setCompanyOk] = useState(false)
     function checkPassword() {
 
         if (passwordRequired.current.value) {
-            setCompanyOk(true)
             props.getCompany(passwordRequired.current.value)
         }
     }
@@ -37,7 +31,9 @@ function Company(props) {
                 <Card.Body>
                     <Card.Title>Input password of company</Card.Title>
                     <Card.Text>
-                        616ea9a2555f483b591b9dab
+
+                        <p> 616ea9a2555f483b591b9dab  IKEA הקוד של</p>
+                        <p> 616ead63adc3aa924675643c  ICE הקוד של</p>
                         <br />
 
                         <input type='text' ref={passwordRequired} />
@@ -45,10 +41,7 @@ function Company(props) {
                     </Card.Text>
 
                     <Button variant="primary" onClick={() => checkPassword()}>OK</Button>
-                    <br />
-                    <br />  {companyOk && <Button variant="outline-warning" size="lg"
-                        onClick={() => props.history.push('/uploadImage')}>
-                        go to upload image</Button >}
+
 
                 </Card.Body>
                 <Card.Footer className="text-muted">2 days ago</Card.Footer>

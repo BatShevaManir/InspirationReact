@@ -3,6 +3,7 @@ import { actions } from '../actions/action.js';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { uploadImage } from '../middleware/imageCrud';
+import { getCategories } from "../middleware/categoryCrud";
 import { getCompany } from "../middleware/companyCrud";
 import company_reduser from '../Redusers/company_reduser';
 import product_reduser from '../Redusers/product_reduser';
@@ -15,7 +16,8 @@ const store = createStore(
         applyMiddleware
             (
                 uploadImage,
-                getCompany
+                getCompany,
+                getCategories
             )))
 // store.dispatch(actions.extractJwt());
 

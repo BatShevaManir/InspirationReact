@@ -25,7 +25,6 @@ export default function Home(props) {
         >
 
             <div class='div11'>
-                hello
             </div>
 
             <Switch>
