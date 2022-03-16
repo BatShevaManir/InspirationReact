@@ -8,7 +8,6 @@ const initialState = {
 }
 const card = {
     setCompany(state, action) {
-        console.log(action.payload);
         state.company = action.payload;
     }
 }

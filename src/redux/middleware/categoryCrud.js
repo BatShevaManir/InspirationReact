@@ -2,13 +2,12 @@
 import { actions } from "../actions/action";
 
 
-export const getCompany = ({ dispatch, getState }) => next => action => {
+export const getCategories = ({ dispatch, getState }) => next => action => {
 
-    if (action.type === 'GET_COMPANY') {
+    if (action.type === 'GET_CATEGORIES') {
 
-        let companyId = action.payload
         fetch(
-            `http://localhost:3000/companies/${companyId}`,
+            `http://localhost:3000/categories`,
             {
                 method: "GET",
             }
@@ -16,10 +15,7 @@ export const getCompany = ({ dispatch, getState }) => next => action => {
         ).then((result) => {
             return result.json()
         }).then((result) => {
-            
-            dispatch(actions.setCompany(result.company))
-            dispatch(actions.setProducts(result.products))
-
+            dispatch(actions.setCategories(result.categories))
         })
             .catch((err) => {
 

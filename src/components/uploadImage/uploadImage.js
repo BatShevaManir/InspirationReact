@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from '../../redux/actions/action';
 import { Button } from 'react-bootstrap';
 import ImageUploading from "react-images-uploading";
 import { ColorExtractor } from "react-color-extractor";
+import SelectCategory from '../selectCategory/selectCategory';
 
 
 function UploadImage(props) {
+
+
+    const [category, setCategory] = useState()
     const [images, setImages] = useState([])
     const maxNumber = 69;
     const [colorsImage, setColorsImage] = useState([])
@@ -45,7 +49,10 @@ function UploadImage(props) {
     };
 
     function uploadImage() {
-        props.uploadImage({ 'images': images, 'companyId': props.company._id })
+        if (category)
+            props.uploadImage({ 'images': images, 'companyId': props.company._id, categoryId: category })
+        else
+            alert("Choose category")
     }
     function setMyColors(colors, index) {
         setColorsImage(colors)
@@ -53,13 +60,19 @@ function UploadImage(props) {
     }
     return (
         <>
-            <div class=''>
-                hello uploadImage
-            </div>
             <h1>Hi to {props.company.name}</h1>
+            <div class=''>
+                <h4>Here you can select a category of the products you want to upload</h4>
+                <h4> Select an image and then we will find all the colors that are in the image</h4>
+                <h4> Then click Save </h4>
+            </div>
+
+            <label>Select category</label>
+            <SelectCategory category={(c) => setCategory(c)} />
+
             <Button variant="outline-warning"
                 onClick={() => uploadImage()}>
-                upload image</Button >
+                Save</Button >
 
             <div className="App">
                 <ImageUploading
@@ -80,15 +93,15 @@ function UploadImage(props) {
                     }) => (
                         // write your building UI
                         <div className="upload__image-wrapper">
-                            <button
+                            <Button
                                 style={isDragging ? { color: "red" } : undefined}
                                 onClick={onImageUpload}
                                 {...dragProps}
                             >
-                                Click or Drop here
-                            </button>
+                                Choose image
+                            </Button>
                             &nbsp;
-                            <button onClick={onImageRemoveAll}>Remove all images</button>
+                            <Button onClick={onImageRemoveAll}>Remove all images</Button>
                             {imageList.map((image, index) => (
                                 <div key={index} className="image-item">
 
@@ -124,13 +137,16 @@ function UploadImage(props) {
 
 const mapStateToProps = (state) => {
     return {
-        company: state.company_reduser.company
+        company: state.company_reduser.company,
+        categories: state.product_reduser.categories
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        uploadImage: (obj) => dispatch(actions.uploadImage(obj))
+        uploadImage: (obj) => dispatch(actions.uploadImage(obj)),
+        getCategories: () => dispatch(actions.getCategories()),
+
         // getProjectsByWorkspaceId: (idWorkspace) => dispatch(actions.getProjectsByWorkspaceId(idWorkspace))
     }
 
