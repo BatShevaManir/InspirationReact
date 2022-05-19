@@ -2,22 +2,16 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { actions } from '../actions/action.js';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { uploadImage } from '../middleware/imageCrud';
-import { getCategories } from "../middleware/categoryCrud";
-import { getCompany } from "../middleware/companyCrud";
-import company_reduser from '../Redusers/company_reduser';
-import product_reduser from '../Redusers/product_reduser';
-
-const reducers = combineReducers({ company_reduser, product_reduser });
+import { getUsers } from '../middleware/user.js';
+import user_reduser from "../Redusers/user_reduser";
+const reducers = combineReducers({ user_reduser });
 
 const store = createStore(
     reducers,
     composeWithDevTools(
         applyMiddleware
             (
-                uploadImage,
-                getCompany,
-                getCategories
+                getUsers
             )))
 // store.dispatch(actions.extractJwt());
 
